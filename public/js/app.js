@@ -1,7 +1,7 @@
 let username 
 let socket = io()
 do {
-    username = prompt('Enter your name: ')
+    username = prompt('Enter Your Name : ')
 } while(!username)
 
 const textarea = document.querySelector('#textarea')
@@ -11,9 +11,7 @@ const commentBox = document.querySelector('.comment__box')
 submitBtn.addEventListener('click', (e) => {
     e.preventDefault()
     let comment = textarea.value
-    if(!comment) {
-        return
-    }
+    if(!comment){ return }
     postComment(comment)
 })
 
@@ -27,7 +25,7 @@ function postComment(comment) {
     textarea.value = ''
     // Broadcast
     broadcastComment(data)
-    // Sync with Mongo Db
+    // Sync with Mongo DB
     syncWithDb(data)
 
 }
@@ -61,6 +59,9 @@ function broadcastComment(data) {
 socket.on('comment', (data) => {
     appendToDom(data)
 })
+
+
+
 let timerId = null
 function debounce(func, timer) {
     if(timerId) {
@@ -83,8 +84,10 @@ textarea.addEventListener('keyup', (e) => {
     socket.emit('typing', { username })
 })
 
-// Api calls 
 
+
+
+// Api calls 
 function syncWithDb(data) {
     const headers = {
         'Content-Type': 'application/json'

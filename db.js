@@ -1,20 +1,21 @@
-function dbConnect() {
-    // Db connection
-const mongoose = require('mongoose')
-const url = 'mongodb://localhost/comments'
+function connectToDB() {
+    // This code is entirely responsible for making connection to database
+    const mongoose = require('mongoose')
+    const URL = `mongodb://localhost:27017/comments`
 
-mongoose.connect(url, {
-    userNewUrlParser: true,
-    useUnifiedTopology: true,
-    useFindAndModify: true
-})
+    mongoose.connect(URL, {
+        userNewUrlParser: true,
+        useUnifiedTopology: true,
+        useFindAndModify: true
+    })
 
-const connection = mongoose.connection
-connection.once('open', function() {
-    console.log('Database connected...')
-}).catch(function(err){
-    console.log('Connection failed...')
-})
+    const connection = mongoose.connection
+    connection.once('open', ()=> {
+        console.log('Connected To Database...')
+    }).catch((err)=>{
+        console.log('Connection Failed...')
+        console.log(err);
+    })
 }
 
-module.exports = dbConnect
+module.exports = connectToDB

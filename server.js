@@ -1,12 +1,12 @@
 const express = require('express')
 const app = express()
 
-const port = process.env.PORT || 3000
+const PORT = process.env.PORT || 3000
 
 app.use(express.static('public'))
 
-const dbConnect = require('./db')
-dbConnect()
+const connectToDB = require('./db')
+connectToDB()
 const Comment = require('./models/comment')
 
 app.use(express.json())
@@ -24,20 +24,19 @@ app.post('/api/comments', (req, res) => {
 })
 
 app.get('/api/comments', (req, res) => {
-    Comment.find().then(function(comments) {
+    Comment.find().then((comments)=> {
         res.send(comments)
     })
 })
 
-
-const server = app.listen(port, () => {
-    console.log(`Listening on port ${port}`)
+const server = app.listen(PORT, () => {
+    console.log(`Listening On Port ${PORT}`)
 })
 
 let io = require('socket.io')(server)
 
 io.on('connection', (socket) => {
-    console.log(`New connection: ${socket.id}`)
+    console.log(`New Connection: ${socket.id}`)
     // Recieve event
     socket.on('comment', (data) => {
         data.time = Date()
