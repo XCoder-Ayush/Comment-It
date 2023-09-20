@@ -17,10 +17,10 @@ submitBtn.addEventListener('click', (e) => {
 
 function postComment(comment) {
     // Append to dom
-    let data = {
+    let data = new Comment({
         username: username,
         comment: comment
-    }
+    })
     appendToDom(data)
     textarea.value = ''
     // Broadcast
@@ -33,6 +33,10 @@ function postComment(comment) {
 function appendToDom(data) {
     let lTag = document.createElement('li')
     lTag.classList.add('comment', 'mb-3')
+
+    // <li class="comment mb-3">
+    //     markup
+    // </li>
 
     let markup = `
                         <div class="card border-light mb-3">
@@ -47,16 +51,18 @@ function appendToDom(data) {
                         </div>
     `
     lTag.innerHTML = markup
-
+    // li class="comment mb-3">
+        
+    // </li>
     commentBox.prepend(lTag)
 }
 
 function broadcastComment(data) {
     // Socket
-    socket.emit('comment', data)
+    socket.emit('comment-hoyeche', data)
 }
 
-socket.on('comment', (data) => {
+socket.on('comment-hoyeche', (data) => {
     appendToDom(data)
 })
 

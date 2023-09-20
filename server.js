@@ -11,7 +11,8 @@ const Comment = require('./models/comment')
 
 app.use(express.json())
 
-// Routes 
+// Routes / Apis
+
 app.post('/api/comments', (req, res) => {
     const comment = new Comment({
         username: req.body.username,
@@ -20,7 +21,6 @@ app.post('/api/comments', (req, res) => {
     comment.save().then(response => {
         res.send(response)
     })
-
 })
 
 app.get('/api/comments', (req, res) => {
@@ -33,12 +33,13 @@ const server = app.listen(PORT, () => {
     console.log(`Listening On Port ${PORT}`)
 })
 
+
 let io = require('socket.io')(server)
 
 io.on('connection', (socket) => {
     console.log(`New Connection: ${socket.id}`)
     // Recieve event
-    socket.on('comment', (data) => {
+    socket.on('comment-hoyeche', (data) => {
         data.time = Date()
         socket.broadcast.emit('comment', data)
     })
@@ -47,3 +48,9 @@ io.on('connection', (socket) => {
         socket.broadcast.emit('typing', data) 
     })
 })
+
+
+// const http=require('http');
+// http.createServer(PORT,()=>{
+//     log
+// })

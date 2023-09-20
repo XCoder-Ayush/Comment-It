@@ -4,9 +4,9 @@ function connectToDB() {
     const URL = `mongodb://localhost:27017/comments`
 
     mongoose.connect(URL, {
-        userNewUrlParser: true,
         useUnifiedTopology: true,
-        useFindAndModify: true
+        useFindAndModify: true,
+        useNewUrlParser:true
     })
 
     const connection = mongoose.connection
